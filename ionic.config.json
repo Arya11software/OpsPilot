@@ -1,0 +1,7 @@
+{
+  "name": "OpsPilot",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
