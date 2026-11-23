@@ -1,21 +1,306 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Blank </ion-title>
+<ion-header class="ion-no-border ops-header">
+  <ion-toolbar class="ops-toolbar">
+    <ion-buttons slot="start">
+      <ion-button
+        fill="clear"
+        class="header-action-btn"
+        aria-label="Navigation Menu"
+      >
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <div class="brand-container">
+      <ion-icon
+        name="location-sharp"
+        class="brand-pin-icon"
+        aria-hidden="true"
+      ></ion-icon>
+      <span class="brand-title">OpsPilot</span>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button
+        fill="clear"
+        class="header-action-btn notification-btn"
+        aria-label="Notifications"
+      >
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+        <span class="notification-badge-dot" aria-hidden="true"></span>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ops-content" [fullscreen]="true">
+  <div class="screen-wrapper">
+    <!-- Welcome Banner Card -->
+    <section class="welcome-card" aria-label="Welcome section">
+      <div class="welcome-text">
+        <h1 class="welcome-title">
+          Welcome, {{ userName }}
+          <span class="wave-emoji" aria-hidden="true">👋</span>
+        </h1>
+        <p class="welcome-subtitle">Here are your field tasks for today.</p>
+      </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>
-      Start with Ionic
-      <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a>
-    </p>
+      <div class="welcome-graphic" aria-hidden="true">
+        <svg
+          width="100"
+          height="85"
+          viewBox="0 0 100 85"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!-- Background decorative clouds -->
+          <ellipse
+            cx="28"
+            cy="22"
+            rx="16"
+            ry="10"
+            fill="#FFDFC7"
+            fill-opacity="0.5"
+          />
+          <ellipse
+            cx="44"
+            cy="24"
+            rx="14"
+            ry="8"
+            fill="#FFDFC7"
+            fill-opacity="0.4"
+          />
+          <!-- Plant / foliage in background -->
+          <path d="M72 48C69 32 58 35 62 52Z" fill="#81C784" />
+          <path d="M78 45C86 33 76 27 70 42Z" fill="#4CAF50" />
+          <path d="M82 54C91 44 87 36 78 49Z" fill="#388E3C" />
+          <!-- Clipboard body -->
+          <rect
+            x="26"
+            y="14"
+            width="46"
+            height="58"
+            rx="8"
+            fill="#FFFFFF"
+            stroke="#F6AD55"
+            stroke-width="2"
+          />
+          <!-- Top clip -->
+          <rect x="39" y="10" width="20" height="7" rx="3.5" fill="#E28743" />
+          <circle cx="49" cy="13.5" r="1.5" fill="#FFFFFF" />
+          <!-- Task list item 1 -->
+          <path
+            d="M33 28L36 31L42 25"
+            stroke="#FF6200"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <line
+            x1="46"
+            y1="28"
+            x2="62"
+            y2="28"
+            stroke="#E2E8F0"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          />
+          <!-- Task list item 2 -->
+          <path
+            d="M33 39L36 42L42 36"
+            stroke="#FF6200"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <line
+            x1="46"
+            y1="39"
+            x2="62"
+            y2="39"
+            stroke="#E2E8F0"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          />
+          <!-- Task list item 3 -->
+          <path
+            d="M33 50L36 53L42 47"
+            stroke="#FF6200"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <line
+            x1="46"
+            y1="50"
+            x2="62"
+            y2="50"
+            stroke="#E2E8F0"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          />
+          <!-- Location pin on bottom right -->
+          <path
+            d="M74 44C68.477 44 64 48.477 64 54C64 61.5 74 72 74 72C74 72 84 61.5 84 54C84 48.477 79.523 44 74 44Z"
+            fill="#FF6200"
+          />
+          <circle cx="74" cy="53" r="3.5" fill="#FFFFFF" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- Task Overview Section -->
+    <section class="overview-section" aria-labelledby="overview-heading">
+      <h2 id="overview-heading" class="section-heading">Task Overview</h2>
+
+      <div class="overview-cards-grid">
+        @for (stat of stats; track stat.id) {
+          <ion-card
+            [class]="'stat-card card-' + stat.type"
+            tabindex="0"
+            [attr.aria-label]="stat.count + ' ' + stat.label"
+          >
+            <ion-card-content class="stat-card-body">
+              <div [class]="'stat-icon-bubble bubble-' + stat.type">
+                <ion-icon [name]="stat.icon" aria-hidden="true"></ion-icon>
+              </div>
+              <div class="stat-details">
+                <span class="stat-count">{{ stat.count }}</span>
+                <span class="stat-label">{{ stat.label }}</span>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        }
+      </div>
+    </section>
+
+    <!-- Recent Tasks Section -->
+    <section class="tasks-section" aria-labelledby="recent-tasks-heading">
+      <div class="tasks-section-header">
+        <h2 id="recent-tasks-heading" class="section-heading">Recent Tasks</h2>
+        <ion-button
+          fill="clear"
+          size="small"
+          class="view-all-button"
+          (click)="onViewAll()"
+          aria-label="View all field tasks"
+        >
+          View All
+          <ion-icon
+            slot="end"
+            name="arrow-forward-outline"
+            aria-hidden="true"
+          ></ion-icon>
+        </ion-button>
+      </div>
+
+      <ion-list class="tasks-list" lines="none" aria-label="Field Tasks List">
+        @for (task of recentTasks; track task.id) {
+          <ion-item
+            class="task-list-item"
+            button
+            [detail]="false"
+            (click)="onTaskClick(task)"
+            [attr.aria-label]="
+              task.title +
+              ', location: ' +
+              task.location +
+              ', distance: ' +
+              task.distance +
+              ', status: ' +
+              task.status
+            "
+          >
+            <!-- Leading Category Icon -->
+            <div slot="start" class="task-category-icon" aria-hidden="true">
+              <ion-icon [name]="task.icon"></ion-icon>
+            </div>
+
+            <!-- Task Details -->
+            <ion-label class="task-info">
+              <h3 class="task-title">{{ task.title }}</h3>
+              <p class="task-meta">
+                <ion-icon
+                  name="location-sharp"
+                  class="meta-location-icon"
+                  aria-hidden="true"
+                ></ion-icon>
+                <span>{{ task.location }}, {{ task.distance }}</span>
+              </p>
+            </ion-label>
+
+            <!-- Status Badge / Chip -->
+            <ion-badge
+              slot="end"
+              [class]="'status-chip ' + getStatusClass(task.status)"
+            >
+              {{ task.status }}
+            </ion-badge>
+          </ion-item>
+        }
+      </ion-list>
+    </section>
   </div>
 </ion-content>
+
+<!-- Mobile Bottom Navigation Bar / Footer -->
+<ion-footer class="ion-no-border ops-footer">
+  <nav class="bottom-nav-bar" aria-label="Bottom Navigation">
+    <button
+      type="button"
+      class="nav-tab-item"
+      [class.active]="activeTab === 'home'"
+      (click)="onTabClick('home')"
+      aria-label="Home Tab"
+    >
+      <ion-icon
+        [name]="activeTab === 'home' ? 'home-sharp' : 'home-outline'"
+      ></ion-icon>
+      <span class="tab-label">Home</span>
+    </button>
+
+    <button
+      type="button"
+      class="nav-tab-item"
+      [class.active]="activeTab === 'tasks'"
+      (click)="onTabClick('tasks')"
+      aria-label="Tasks Tab"
+    >
+      <ion-icon name="clipboard-outline"></ion-icon>
+      <span class="tab-label">Tasks</span>
+    </button>
+
+    <!-- Elevated Action Button (FAB) -->
+    <div class="fab-slot">
+      <button
+        type="button"
+        class="elevated-fab-btn"
+        (click)="onFabClick()"
+        aria-label="Create new field task"
+      >
+        <ion-icon name="add-outline"></ion-icon>
+      </button>
+    </div>
+
+    <button
+      type="button"
+      class="nav-tab-item"
+      [class.active]="activeTab === 'visits'"
+      (click)="onTabClick('visits')"
+      aria-label="Visits Tab"
+    >
+      <ion-icon name="location-outline"></ion-icon>
+      <span class="tab-label">Visits</span>
+    </button>
+
+    <button
+      type="button"
+      class="nav-tab-item"
+      [class.active]="activeTab === 'settings'"
+      (click)="onTabClick('settings')"
+      aria-label="Settings Tab"
+    >
+      <ion-icon name="settings-outline"></ion-icon>
+      <span class="tab-label">Settings</span>
+    </button>
+  </nav>
+</ion-footer>
