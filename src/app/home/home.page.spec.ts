@@ -1,4 +1,5 @@
 import { TestBed, type ComponentFixture } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 import { TaskService } from '../services/task.service';
 
@@ -8,11 +9,13 @@ describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
   let taskService: TaskService;
+  let router: Router;
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(HomePage);
     component = fixture.componentInstance;
     taskService = TestBed.inject(TaskService);
+    router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
@@ -47,10 +50,24 @@ describe('HomePage', () => {
     expect(taskItems.length).toBe(3);
   });
 
-  it('should update activeTab when a tab is selected', () => {
+  it('should navigate to /tasks when onViewAll is clicked', () => {
+    const navigateSpy = vi.spyOn(router, 'navigate');
+    component.onViewAll();
+    expect(navigateSpy).toHaveBeenCalledWith(['/tasks']);
+  });
+
+  it('should navigate to /tasks/:id when onTaskClick is called', () => {
+    const navigateSpy = vi.spyOn(router, 'navigate');
+    component.onTaskClick(component.recentTasks[0]);
+    expect(navigateSpy).toHaveBeenCalledWith(['/tasks', 'task-1']);
+  });
+
+  it('should navigate to /tasks or /settings when respective tabs are clicked', () => {
+    const navigateSpy = vi.spyOn(router, 'navigate');
     component.onTabClick('tasks');
-    expect(component.activeTab).toBe('tasks');
-    component.onTabClick('home');
-    expect(component.activeTab).toBe('home');
+    expect(navigateSpy).toHaveBeenCalledWith(['/tasks']);
+
+    component.onTabClick('settings');
+    expect(navigateSpy).toHaveBeenCalledWith(['/settings']);
   });
 });

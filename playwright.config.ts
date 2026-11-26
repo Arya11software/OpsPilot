@@ -10,12 +10,16 @@ export default defineConfig({
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : 'list',
   use: {
     baseURL,
+    channel: 'msedge',
     trace: 'on-first-retry',
   },
   projects: [
     {
       name: 'Mobile Chrome',
-      use: { ...devices['Pixel 7'] },
+      use: {
+        ...devices['Pixel 7'],
+        channel: 'msedge',
+      },
     },
   ],
   webServer: {

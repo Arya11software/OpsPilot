@@ -1,22 +1,24 @@
 <ion-header class="ion-no-border ops-header">
   <ion-toolbar class="ops-toolbar">
-    <ion-buttons slot="start">
-      <ion-button fill="clear" class="header-action-btn" aria-label="Navigation Menu">
-        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <div class="toolbar-inner-container">
+      <ion-buttons slot="start">
+        <ion-menu-button menu="main-menu" class="header-action-btn" autoHide="false" aria-label="Navigation Menu">
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
 
-    <div class="brand-container">
-      <ion-icon name="location-sharp" class="brand-pin-icon" aria-hidden="true"></ion-icon>
-      <span class="brand-title">OpsPilot</span>
+      <div class="brand-container">
+        <ion-icon name="location-sharp" class="brand-pin-icon" aria-hidden="true"></ion-icon>
+        <span class="brand-title">OpsPilot</span>
+      </div>
+
+      <ion-buttons slot="end">
+        <ion-button fill="clear" class="header-action-btn notification-btn" aria-label="Notifications">
+          <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+          <span class="notification-badge-dot" aria-hidden="true"></span>
+        </ion-button>
+      </ion-buttons>
     </div>
-
-    <ion-buttons slot="end">
-      <ion-button fill="clear" class="header-action-btn notification-btn" aria-label="Notifications">
-        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
-        <span class="notification-badge-dot" aria-hidden="true"></span>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -163,59 +165,3 @@
     </section>
   </div>
 </ion-content>
-
-<!-- Mobile Bottom Navigation Bar / Footer -->
-<ion-footer class="ion-no-border ops-footer">
-  <nav class="bottom-nav-bar" aria-label="Bottom Navigation">
-    <button
-      type="button"
-      class="nav-tab-item"
-      [class.active]="activeTab === 'home'"
-      (click)="onTabClick('home')"
-      aria-label="Home Tab"
-    >
-      <ion-icon [name]="activeTab === 'home' ? 'home-sharp' : 'home-outline'"></ion-icon>
-      <span class="tab-label">Home</span>
-    </button>
-
-    <button
-      type="button"
-      class="nav-tab-item"
-      [class.active]="activeTab === 'tasks'"
-      (click)="onTabClick('tasks')"
-      aria-label="Tasks Tab"
-    >
-      <ion-icon name="clipboard-outline"></ion-icon>
-      <span class="tab-label">Tasks</span>
-    </button>
-
-    <!-- Elevated Action Button (FAB) -->
-    <div class="fab-slot">
-      <button type="button" class="elevated-fab-btn" (click)="onFabClick()" aria-label="Create new field task">
-        <ion-icon name="add-outline"></ion-icon>
-      </button>
-    </div>
-
-    <button
-      type="button"
-      class="nav-tab-item"
-      [class.active]="activeTab === 'visits'"
-      (click)="onTabClick('visits')"
-      aria-label="Visits Tab"
-    >
-      <ion-icon name="location-outline"></ion-icon>
-      <span class="tab-label">Visits</span>
-    </button>
-
-    <button
-      type="button"
-      class="nav-tab-item"
-      [class.active]="activeTab === 'settings'"
-      (click)="onTabClick('settings')"
-      aria-label="Settings Tab"
-    >
-      <ion-icon name="settings-outline"></ion-icon>
-      <span class="tab-label">Settings</span>
-    </button>
-  </nav>
-</ion-footer>

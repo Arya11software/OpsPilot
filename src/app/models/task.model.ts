@@ -4,6 +4,8 @@ export type TaskCategory = 'store' | 'equipment' | 'safety' | 'audit';
 
 export type StatType = 'total' | 'in-progress' | 'completed' | 'pending';
 
+export type TaskPriority = 'Low' | 'Medium' | 'High';
+
 /**
  * Strongly-typed model representing an operational field task in OpsPilot.
  */
@@ -18,6 +20,9 @@ export interface Task {
   assignedTo?: string;
   dueDate?: string;
   description?: string;
+  priority?: TaskPriority;
+  scheduledDate?: string;
+  scheduledTime?: string;
 }
 
 /**

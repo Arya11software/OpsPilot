@@ -1,5 +1,6 @@
 import { Component, DestroyRef, inject, type OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 import {
   IonBadge,
   IonButton,
@@ -7,13 +8,15 @@ import {
   IonCard,
   IonCardContent,
   IonContent,
-  IonFooter,
   IonHeader,
   IonIcon,
   IonItem,
   IonLabel,
   IonList,
+  IonMenuButton,
   IonToolbar,
+  MenuController,
+  type ViewWillEnter,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
@@ -72,14 +75,16 @@ addIcons({
     IonIcon,
     IonButton,
     IonButtons,
-    IonFooter,
+    IonMenuButton,
   ],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, ViewWillEnter {
   /**
    * Injected services via Angular Dependency Injection.
    */
   private readonly taskService = inject(TaskService);
+  private readonly router = inject(Router);
+  private readonly menuCtrl = inject(MenuController);
   private readonly destroyRef = inject(DestroyRef);
 
   readonly userName = 'Arya';
@@ -98,12 +103,24 @@ export class HomePage implements OnInit {
   readonly recentTasks$: Observable<Task[]> = this.taskService.getRecentTasks(3);
 
   ngOnInit(): void {
-    // Consume overview stats stream with automatic lifecycle-bound unsubscription
+    this.subscribeToTaskStreams();
+  }
+
+  /**
+   * Ionic Page Lifecycle Hook: ionViewWillEnter
+   * Fired when the page is about to enter and become the active view.
+   * Ensures home stats and tasks are up-to-date when navigating back.
+   */
+  ionViewWillEnter(): void {
+    this.activeTab = 'home';
+    this.subscribeToTaskStreams();
+  }
+
+  private subscribeToTaskStreams(): void {
     this.stats$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((stats) => {
       this.stats = stats;
     });
 
-    // Consume recent tasks stream with automatic lifecycle-bound unsubscription
     this.recentTasks$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((tasks) => {
       this.recentTasks = tasks;
     });
@@ -122,19 +139,40 @@ export class HomePage implements OnInit {
     }
   }
 
+  /**
+   * Navigate between major tabs using Angular Router.
+   */
   onTabClick(tab: string): void {
     this.activeTab = tab;
+    if (tab === 'tasks') {
+      this.router.navigate(['/tasks']);
+    } else if (tab === 'settings') {
+      this.router.navigate(['/settings']);
+    }
   }
 
+  /**
+   * Navigate to the details page of a selected task (/tasks/:id).
+   */
   onTaskClick(task: Task): void {
-    console.log('Selected task:', task.title);
+    this.router.navigate(['/tasks', task.id]);
   }
 
+  /**
+   * Navigate to the complete task list (/tasks).
+   */
   onViewAll(): void {
-    console.log('View all tasks clicked');
+    this.router.navigate(['/tasks']);
   }
 
   onFabClick(): void {
-    console.log('Quick add task clicked');
+    this.router.navigate(['/tasks']);
+  }
+
+  /**
+   * Open the side navigation drawer.
+   */
+  openMenu(): void {
+    this.menuCtrl.open('main-menu');
   }
 }

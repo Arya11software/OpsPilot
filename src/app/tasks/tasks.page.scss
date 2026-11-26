@@ -1,0 +1,272 @@
+:host {
+  display: block;
+}
+
+.tasks-header {
+  box-shadow: 0 2px 8px rgba(255, 98, 0, 0.2);
+}
+
+.tasks-toolbar {
+  --background: #ff6200;
+  --color: #ffffff;
+  --min-height: 56px;
+  --padding-top: max(env(safe-area-inset-top, 0px), var(--ion-safe-area-top, 0px));
+  --padding-start: 8px;
+  --padding-end: 8px;
+}
+
+.toolbar-inner-container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @media (min-width: 992px) {
+    padding: 0 clamp(8px, 2vw, 32px);
+    max-width: 1800px;
+  }
+}
+
+.header-back-btn {
+  --color: #ffffff;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.header-action-btn {
+  --color: #ffffff;
+  color: #ffffff;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 24px;
+  margin: 0;
+}
+
+.header-title-container {
+  display: flex;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #ffffff;
+}
+
+/* Filter Segment Toolbar */
+.filter-toolbar {
+  --background: #ffffff;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.task-filter-segment {
+  --background: #f8f9fa;
+
+  ion-segment-button {
+    --indicator-color: #ff6200;
+    --color: #64748b;
+    --color-checked: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    min-height: 38px;
+    text-transform: none;
+  }
+}
+
+/* Content & Wrapper */
+.tasks-content {
+  --background: #f8f9fa;
+  --padding-start: max(env(safe-area-inset-left, 0px), var(--ion-safe-area-left, 0px));
+  --padding-end: max(env(safe-area-inset-right, 0px), var(--ion-safe-area-right, 0px));
+}
+
+.tasks-screen-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px 14px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+
+  @media (min-width: 600px) {
+    padding: 20px 24px 32px;
+    gap: 20px;
+  }
+
+  @media (min-width: 992px) {
+    padding: 24px 32px 36px;
+    gap: 24px;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 28px clamp(32px, 3.5vw, 64px) 44px;
+    gap: 28px;
+    max-width: 1800px;
+  }
+}
+
+/* Task Item Cards */
+.task-items-list {
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media (min-width: 600px) and (max-width: 991px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 14px;
+  }
+
+  @media (min-width: 992px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 16px;
+  }
+}
+
+.task-card-item {
+  --background: #ffffff;
+  --color: #1e293b;
+  border-radius: 14px;
+  border: 1px solid #edf0f3;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+  --min-height: 76px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.task-category-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff0e8;
+  color: #ff6200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.task-info {
+  margin: 0;
+  padding: 10px 0;
+  min-width: 0;
+}
+
+.task-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 4px;
+  word-break: break-word;
+}
+
+.task-meta {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.meta-location-icon {
+  font-size: 13px;
+  color: #ff721a;
+}
+
+.task-due-date {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 4px 0 0;
+}
+
+/* Status Chips */
+.status-chip {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  text-transform: capitalize;
+  flex-shrink: 0;
+}
+
+.status-completed { background-color: #e8f8ec; color: #16a34a; }
+.status-in-progress { background-color: #fef3e2; color: #d97706; }
+.status-pending { background-color: #fde8e8; color: #dc2626; }
+
+/* Loading & Empty States */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  gap: 12px;
+
+  .loading-text {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+}
+
+.empty-state-card {
+  margin: 24px 0;
+  border-radius: 16px;
+  border: 1px solid #edf0f3;
+  box-shadow: none;
+  background: #ffffff;
+}
+
+.empty-state-content {
+  text-align: center;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-icon-bubble {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fff0e8;
+  color: #ff6200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 6px;
+}
+
+.empty-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 16px;
+  max-width: 320px;
+}

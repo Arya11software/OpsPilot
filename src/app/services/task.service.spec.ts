@@ -66,4 +66,25 @@ describe('TaskService', () => {
     expect(task).toBeDefined();
     expect(task?.title).toBe('Site Visit – Store A');
   });
+
+  it('should add a new task and prepend it to the reactive task stream', async () => {
+    const created = service.addTask({
+      title: 'Routine Safety Audit',
+      category: 'Audit',
+      location: 'East Terminal',
+      scheduledDate: '2026-11-27',
+      scheduledTime: '14:30',
+      description: 'Audit fire extinguisher placement and emergency lighting.',
+      priority: 'High',
+    });
+
+    expect(created).toBeDefined();
+    expect(created.id).toBe('task-13');
+    expect(created.title).toBe('Routine Safety Audit');
+    expect(created.priority).toBe('High');
+
+    const tasks = await firstValueFrom(service.getTasks());
+    expect(tasks.length).toBe(13);
+    expect(tasks[0].id).toBe('task-13');
+  });
 });

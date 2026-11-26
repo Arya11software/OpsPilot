@@ -1,0 +1,130 @@
+<ion-header class="ion-no-border detail-header">
+  <ion-toolbar class="detail-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/tasks"
+        text=""
+        icon="arrow-back-outline"
+        class="header-back-btn"
+        aria-label="Back to Tasks List"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <div class="header-title-container">
+      <span class="header-title">Task Details</span>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="detail-content" [fullscreen]="true">
+  <div class="detail-screen-wrapper">
+    <!-- Loading State -->
+    @if (isLoading) {
+    <div class="loading-container" aria-live="polite">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p class="loading-text">Loading task details...</p>
+    </div>
+    }
+
+    <!-- Error / Invalid Task ID State -->
+    @if (!isLoading && (hasError || !task)) {
+    <ion-card class="error-card">
+      <ion-card-content class="error-content">
+        <div class="error-icon-bubble">
+          <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+        </div>
+        <h2 class="error-title">Task Not Found</h2>
+        <p class="error-subtitle">
+          No field task exists matching identifier
+          <code>"{{ taskId }}"</code>.
+        </p>
+        <ion-button fill="solid" color="primary" class="action-button" (click)="goBack()">
+          Back to Tasks List
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+    }
+
+    <!-- Valid Task Details View -->
+    @if (!isLoading && task) {
+    <!-- Hero Card -->
+    <ion-card class="task-hero-card">
+      <ion-card-header class="hero-header">
+        <div class="hero-top-row">
+          <div class="hero-icon-bubble">
+            <ion-icon [name]="task.icon" aria-hidden="true"></ion-icon>
+          </div>
+          <ion-badge [class]="'status-chip ' + getStatusClass(task.status)"> {{ task.status }} </ion-badge>
+        </div>
+
+        <ion-card-title class="hero-title">{{ task.title }}</ion-card-title>
+        <ion-card-subtitle class="hero-id"> Task ID: {{ task.id }} </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content class="hero-body">
+        <div class="meta-row">
+          <div class="meta-item">
+            <ion-icon name="location-sharp" class="meta-icon"></ion-icon>
+            <span>{{ task.location }}</span>
+          </div>
+          <div class="meta-item">
+            <ion-icon name="navigate-outline" class="meta-icon"></ion-icon>
+            <span>{{ task.distance }} away</span>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Operational Description Card -->
+    <ion-card class="section-card">
+      <ion-card-header>
+        <ion-card-title class="section-title"> Instructions & Scope </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="description-text">
+          {{ task.description || 'No additional instructions provided for this operational task.' }}
+        </p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Assignment & Schedule Information -->
+    <ion-card class="section-card">
+      <ion-card-header>
+        <ion-card-title class="section-title">Assignment & Timeline</ion-card-title>
+      </ion-card-header>
+      <ion-list lines="inset" class="info-list">
+        <ion-item>
+          <ion-icon slot="start" name="person-outline" class="item-icon"></ion-icon>
+          <ion-label>
+            <h3>Assigned Specialist</h3>
+            <p>{{ task.assignedTo || 'Unassigned' }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon slot="start" name="time-outline" class="item-icon"></ion-icon>
+          <ion-label>
+            <h3>Due Time</h3>
+            <p>{{ task.dueDate || 'Flexible' }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon slot="start" name="clipboard-outline" class="item-icon"></ion-icon>
+          <ion-label>
+            <h3>Category</h3>
+            <p class="category-name">{{ task.category || 'General' }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <!-- Action Button -->
+    <div class="bottom-action-container">
+      <ion-button expand="block" color="primary" class="action-button" (click)="goBack()">
+        Return to Tasks List
+      </ion-button>
+    </div>
+    }
+  </div>
+</ion-content>

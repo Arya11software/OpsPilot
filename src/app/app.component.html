@@ -1,3 +1,123 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <!-- Ionic Navigation Drawer / Sidebar Menu -->
+  <ion-menu
+    contentId="main-content"
+    menuId="main-menu"
+    side="start"
+    type="overlay"
+    [swipeGesture]="true"
+    class="ops-sidebar-menu"
+    aria-label="Application Navigation Menu"
+  >
+    <ion-header class="ion-no-border menu-header">
+      <ion-toolbar class="menu-toolbar">
+        <div class="menu-brand">
+          <div class="menu-brand-icon-bubble">
+            <ion-icon name="location-sharp" aria-hidden="true"></ion-icon>
+          </div>
+          <div class="menu-brand-text">
+            <h2 class="menu-brand-title">OpsPilot</h2>
+            <span class="menu-brand-sub">Field Operations</span>
+          </div>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="menu-content">
+      <!-- User Profile Header Card inside Drawer -->
+      <div class="menu-profile-card">
+        <div class="menu-profile-avatar">
+          <ion-icon name="person-circle-outline" aria-hidden="true"></ion-icon>
+        </div>
+        <div class="menu-profile-info">
+          <span class="menu-user-name">Arya Stark</span>
+          <span class="menu-user-role">Field Specialist &bull; OP-4209</span>
+        </div>
+      </div>
+
+      <!-- Navigation Section -->
+      <div class="menu-nav-section">
+        <span class="menu-section-label">Navigation</span>
+        <ion-list lines="none" class="menu-list" role="navigation" aria-label="Main Menu Links">
+          <!-- Home -->
+          <ion-menu-toggle autoHide="false">
+            <ion-item
+              button
+              class="menu-nav-item"
+              [class.active-nav-item]="activeRoute === '/home'"
+              (click)="navigateTo('/home')"
+              detail="false"
+              aria-label="Navigate to Home"
+            >
+              <ion-icon
+                slot="start"
+                [name]="activeRoute === '/home' ? 'home-sharp' : 'home-outline'"
+                class="menu-item-icon"
+                aria-hidden="true"
+              ></ion-icon>
+              <ion-label class="menu-item-label">Home</ion-label>
+              @if (activeRoute === '/home') {
+                <span class="active-indicator-pill" slot="end">Active</span>
+              }
+            </ion-item>
+          </ion-menu-toggle>
+
+          <!-- Tasks -->
+          <ion-menu-toggle autoHide="false">
+            <ion-item
+              button
+              class="menu-nav-item"
+              [class.active-nav-item]="activeRoute === '/tasks'"
+              (click)="navigateTo('/tasks')"
+              detail="false"
+              aria-label="Navigate to Tasks"
+            >
+              <ion-icon
+                slot="start"
+                [name]="activeRoute === '/tasks' ? 'clipboard-sharp' : 'clipboard-outline'"
+                class="menu-item-icon"
+                aria-hidden="true"
+              ></ion-icon>
+              <ion-label class="menu-item-label">Tasks</ion-label>
+              @if (activeRoute === '/tasks') {
+                <span class="active-indicator-pill" slot="end">Active</span>
+              }
+            </ion-item>
+          </ion-menu-toggle>
+
+          <!-- Settings -->
+          <ion-menu-toggle autoHide="false">
+            <ion-item
+              button
+              class="menu-nav-item"
+              [class.active-nav-item]="activeRoute === '/settings'"
+              (click)="navigateTo('/settings')"
+              detail="false"
+              aria-label="Navigate to Settings"
+            >
+              <ion-icon
+                slot="start"
+                [name]="activeRoute === '/settings' ? 'settings-sharp' : 'settings-outline'"
+                class="menu-item-icon"
+                aria-hidden="true"
+              ></ion-icon>
+              <ion-label class="menu-item-label">Settings</ion-label>
+              @if (activeRoute === '/settings') {
+                <span class="active-indicator-pill" slot="end">Active</span>
+              }
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </div>
+
+      <!-- App version footer inside drawer -->
+      <div class="menu-footer">
+        <span class="menu-version">OpsPilot v0.0.1</span>
+        <span class="menu-status-badge">Online</span>
+      </div>
+    </ion-content>
+  </ion-menu>
+
+  <!-- Main Application Router Outlet -->
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

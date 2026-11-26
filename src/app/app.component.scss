@@ -1,0 +1,175 @@
+.ops-sidebar-menu {
+  --width: 290px;
+  --max-width: 85vw;
+
+  .menu-toolbar {
+    --background: #ff6200;
+    --color: #ffffff;
+    --min-height: 70px;
+    padding-top: max(env(safe-area-inset-top, 0px), var(--ion-safe-area-top, 0px));
+  }
+
+  .menu-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .menu-brand-icon-bubble {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #ffffff;
+  }
+
+  .menu-brand-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+  }
+
+  .menu-brand-sub {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+  }
+
+  .menu-content {
+    --background: #ffffff;
+  }
+
+  .menu-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    margin: 14px 14px 6px;
+    border-radius: 12px;
+    background: #fff6f0;
+    border: 1px solid #ffe3d3;
+  }
+
+  .menu-profile-avatar {
+    font-size: 38px;
+    color: #ff6200;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-profile-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-user-name {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .menu-user-role {
+    font-size: 11px;
+    font-weight: 500;
+    color: #64748b;
+    margin-top: 1px;
+  }
+
+  .menu-nav-section {
+    padding: 12px 14px;
+  }
+
+  .menu-section-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    padding-left: 8px;
+  }
+
+  .menu-list {
+    background: transparent;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .menu-nav-item {
+    --background: transparent;
+    --color: #334155;
+    --min-height: 48px;
+    --padding-start: 12px;
+    --inner-padding-end: 12px;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+
+    .menu-item-icon {
+      font-size: 20px;
+      color: #64748b;
+      margin-right: 12px;
+    }
+
+    .menu-item-label {
+      font-size: 14px;
+    }
+
+    &:hover {
+      --background: #fff8f5;
+      .menu-item-icon {
+        color: #ff6200;
+      }
+    }
+
+    &.active-nav-item {
+      --background: #fff0e6;
+      --color: #ff6200;
+      font-weight: 700;
+
+      .menu-item-icon {
+        color: #ff6200;
+      }
+
+      .active-indicator-pill {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        background: #ff6200;
+        color: #ffffff;
+        padding: 3px 8px;
+        border-radius: 12px;
+        letter-spacing: 0.4px;
+      }
+    }
+  }
+
+  .menu-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    margin-top: 24px;
+    border-top: 1px solid #f1f3f5;
+    font-size: 12px;
+    color: #94a3b8;
+  }
+
+  .menu-status-badge {
+    background: #dcfce7;
+    color: #16a34a;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+}

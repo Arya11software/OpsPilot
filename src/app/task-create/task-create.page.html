@@ -1,0 +1,300 @@
+<ion-header class="ion-no-border create-header">
+  <ion-toolbar class="create-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/tasks"
+        text=""
+        icon="arrow-back-outline"
+        class="header-back-btn"
+        aria-label="Back to Tasks"
+        (click)="onBackButtonClick($event)"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="create-header-title">Create Field Task</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" class="header-cancel-btn" (click)="onCancel()" aria-label="Cancel Task Creation">
+        Cancel
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="create-content" [fullscreen]="true">
+  <div class="create-screen-wrapper">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" novalidate class="task-reactive-form">
+      <!-- Section 1: Task Details -->
+      <ion-card class="form-section-card">
+        <ion-card-header class="section-card-header">
+          <div class="section-title-bubble">
+            <ion-icon name="pricetag-outline" aria-hidden="true"></ion-icon>
+          </div>
+          <div>
+            <ion-card-title class="section-card-title">Task Information</ion-card-title>
+            <p class="section-card-subtitle">Define field task identity and operational category</p>
+          </div>
+        </ion-card-header>
+
+        <ion-card-content class="section-card-content">
+          <!-- Task Title -->
+          <div class="form-field-group" [class.field-has-error]="isFieldInvalid('title')">
+            <label for="task-title-input" class="field-label">
+              Task Title <span class="required-star" aria-hidden="true">*</span>
+            </label>
+            <div class="input-container">
+              <ion-input
+                id="task-title-input"
+                type="text"
+                formControlName="title"
+                placeholder="e.g., Site Inspection – Unit 4B"
+                class="ops-input"
+                [attr.aria-required]="true"
+                [attr.aria-invalid]="isFieldInvalid('title')"
+                [attr.aria-describedby]="isFieldInvalid('title') ? 'title-error' : null"
+              ></ion-input>
+            </div>
+            @if (isFieldInvalid('title')) {
+            <div id="title-error" class="error-message" role="alert">
+              <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+              <span>{{ getErrorMessage('title') }}</span>
+            </div>
+            }
+          </div>
+
+          <!-- Task Category -->
+          <div class="form-field-group" [class.field-has-error]="isFieldInvalid('category')">
+            <label for="task-category-select" class="field-label">
+              Task Category <span class="required-star" aria-hidden="true">*</span>
+            </label>
+            <div class="input-container select-container">
+              <ion-select
+                id="task-category-select"
+                formControlName="category"
+                placeholder="Select category"
+                interface="popover"
+                class="ops-select"
+                [attr.aria-required]="true"
+                [attr.aria-invalid]="isFieldInvalid('category')"
+                [attr.aria-describedby]="isFieldInvalid('category') ? 'category-error' : null"
+              >
+                @for (cat of categories; track cat) {
+                <ion-select-option [value]="cat">{{ cat }}</ion-select-option>
+                }
+              </ion-select>
+            </div>
+            @if (isFieldInvalid('category')) {
+            <div id="category-error" class="error-message" role="alert">
+              <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+              <span>{{ getErrorMessage('category') }}</span>
+            </div>
+            }
+          </div>
+
+          <!-- Priority -->
+          <div class="form-field-group" [class.field-has-error]="isFieldInvalid('priority')">
+            <label for="task-priority-select" class="field-label">
+              Priority Level <span class="required-star" aria-hidden="true">*</span>
+            </label>
+            <div class="input-container select-container">
+              <ion-select
+                id="task-priority-select"
+                formControlName="priority"
+                placeholder="Select priority"
+                interface="popover"
+                class="ops-select"
+                [attr.aria-required]="true"
+                [attr.aria-invalid]="isFieldInvalid('priority')"
+                [attr.aria-describedby]="isFieldInvalid('priority') ? 'priority-error' : null"
+              >
+                @for (p of priorities; track p) {
+                <ion-select-option [value]="p">{{ p }} Priority</ion-select-option>
+                }
+              </ion-select>
+            </div>
+            @if (isFieldInvalid('priority')) {
+            <div id="priority-error" class="error-message" role="alert">
+              <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+              <span>{{ getErrorMessage('priority') }}</span>
+            </div>
+            }
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Section 2: Location and Scheduling -->
+      <ion-card class="form-section-card">
+        <ion-card-header class="section-card-header">
+          <div class="section-title-bubble">
+            <ion-icon name="location-outline" aria-hidden="true"></ion-icon>
+          </div>
+          <div>
+            <ion-card-title class="section-card-title">Location & Schedule</ion-card-title>
+            <p class="section-card-subtitle">Specify field facility address and appointment timing</p>
+          </div>
+        </ion-card-header>
+
+        <ion-card-content class="section-card-content">
+          <!-- Location -->
+          <div class="form-field-group" [class.field-has-error]="isFieldInvalid('location')">
+            <label for="task-location-input" class="field-label">
+              Location / Facility <span class="required-star" aria-hidden="true">*</span>
+            </label>
+            <div class="input-container">
+              <ion-input
+                id="task-location-input"
+                type="text"
+                formControlName="location"
+                placeholder="e.g., Riverside Complex, Building B"
+                class="ops-input"
+                [attr.aria-required]="true"
+                [attr.aria-invalid]="isFieldInvalid('location')"
+                [attr.aria-describedby]="isFieldInvalid('location') ? 'location-error' : null"
+              ></ion-input>
+            </div>
+            @if (isFieldInvalid('location')) {
+            <div id="location-error" class="error-message" role="alert">
+              <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+              <span>{{ getErrorMessage('location') }}</span>
+            </div>
+            }
+          </div>
+
+          <!-- Date and Time Row -->
+          <div class="form-field-row">
+            <!-- Scheduled Date -->
+            <div class="form-field-group form-field-half" [class.field-has-error]="isFieldInvalid('scheduledDate')">
+              <label for="task-date-input" class="field-label">
+                Scheduled Date <span class="required-star" aria-hidden="true">*</span>
+              </label>
+              <div class="input-container">
+                <ion-input
+                  id="task-date-input"
+                  type="date"
+                  formControlName="scheduledDate"
+                  class="ops-input"
+                  [attr.aria-required]="true"
+                  [attr.aria-invalid]="isFieldInvalid('scheduledDate')"
+                  [attr.aria-describedby]="isFieldInvalid('scheduledDate') ? 'date-error' : null"
+                ></ion-input>
+              </div>
+              @if (isFieldInvalid('scheduledDate')) {
+              <div id="date-error" class="error-message" role="alert">
+                <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+                <span>{{ getErrorMessage('scheduledDate') }}</span>
+              </div>
+              }
+            </div>
+
+            <!-- Scheduled Time -->
+            <div class="form-field-group form-field-half" [class.field-has-error]="isFieldInvalid('scheduledTime')">
+              <label for="task-time-input" class="field-label">
+                Scheduled Time <span class="required-star" aria-hidden="true">*</span>
+              </label>
+              <div class="input-container">
+                <ion-input
+                  id="task-time-input"
+                  type="time"
+                  formControlName="scheduledTime"
+                  class="ops-input"
+                  [attr.aria-required]="true"
+                  [attr.aria-invalid]="isFieldInvalid('scheduledTime')"
+                  [attr.aria-describedby]="isFieldInvalid('scheduledTime') ? 'time-error' : null"
+                ></ion-input>
+              </div>
+              @if (isFieldInvalid('scheduledTime')) {
+              <div id="time-error" class="error-message" role="alert">
+                <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+                <span>{{ getErrorMessage('scheduledTime') }}</span>
+              </div>
+              }
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Section 3: Description -->
+      <ion-card class="form-section-card">
+        <ion-card-header class="section-card-header">
+          <div class="section-title-bubble">
+            <ion-icon name="document-text-outline" aria-hidden="true"></ion-icon>
+          </div>
+          <div>
+            <ion-card-title class="section-card-title">Scope & Instructions</ion-card-title>
+            <p class="section-card-subtitle">Provide detailed operating instructions for field staff</p>
+          </div>
+        </ion-card-header>
+
+        <ion-card-content class="section-card-content">
+          <div class="form-field-group" [class.field-has-error]="isFieldInvalid('description')">
+            <label for="task-description-textarea" class="field-label">
+              Task Description <span class="required-star" aria-hidden="true">*</span>
+            </label>
+            <div class="input-container textarea-container">
+              <ion-textarea
+                id="task-description-textarea"
+                formControlName="description"
+                rows="4"
+                placeholder="Enter detailed checklist, inspection steps, or required diagnostic equipment (min 10 characters)..."
+                class="ops-textarea"
+                [attr.aria-required]="true"
+                [attr.aria-invalid]="isFieldInvalid('description')"
+                [attr.aria-describedby]="isFieldInvalid('description') ? 'description-error' : null"
+              ></ion-textarea>
+            </div>
+            @if (isFieldInvalid('description')) {
+            <div id="description-error" class="error-message" role="alert">
+              <ion-icon name="alert-circle-outline" aria-hidden="true"></ion-icon>
+              <span>{{ getErrorMessage('description') }}</span>
+            </div>
+            }
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Action Buttons -->
+      <div class="form-actions-wrapper">
+        <ion-button
+          type="submit"
+          expand="block"
+          class="submit-button"
+          [disabled]="isSubmitting"
+          aria-label="Create Task"
+        >
+          @if (isSubmitting) {
+          <ion-spinner name="crescent" slot="start"></ion-spinner>
+          <span>Creating Task...</span>
+          } @else {
+          <ion-icon name="checkmark-circle-outline" slot="start" aria-hidden="true"></ion-icon>
+          <span>Create Field Task</span>
+          }
+        </ion-button>
+
+        <div class="secondary-actions-row">
+          <ion-button
+            type="button"
+            fill="outline"
+            class="reset-button"
+            (click)="onReset()"
+            [disabled]="isSubmitting"
+            aria-label="Reset Form"
+          >
+            <ion-icon name="refresh-outline" slot="start" aria-hidden="true"></ion-icon>
+            <span>Reset Fields</span>
+          </ion-button>
+
+          <ion-button
+            type="button"
+            fill="clear"
+            class="cancel-button"
+            (click)="onCancel()"
+            [disabled]="isSubmitting"
+            aria-label="Cancel and return"
+          >
+            <span>Discard</span>
+          </ion-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ion-content>

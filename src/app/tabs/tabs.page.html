@@ -1,0 +1,45 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom" class="ops-tab-bar" aria-label="Bottom Navigation">
+    <!-- 1. Home Tab -->
+    <ion-tab-button tab="home" [selected]="activeTab === 'home'" (click)="onTabClick('home')" aria-label="Home Tab">
+      <ion-icon [name]="activeTab === 'home' ? 'home-sharp' : 'home-outline'" aria-hidden="true"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <!-- 2. Tasks Tab -->
+    <ion-tab-button tab="tasks" [selected]="activeTab === 'tasks'" (click)="onTabClick('tasks')" aria-label="Tasks Tab">
+      <ion-icon [name]="activeTab === 'tasks' ? 'clipboard-sharp' : 'clipboard-outline'" aria-hidden="true"></ion-icon>
+      <ion-label>Tasks</ion-label>
+    </ion-tab-button>
+
+    <!-- 3. Centered Elevated Circular Action Button (Add) -->
+    <div class="fab-slot" aria-hidden="false">
+      <ion-button type="button" class="elevated-fab-btn" (click)="onAddClick()" aria-label="Create new task">
+        <ion-icon name="add-outline" slot="icon-only" aria-hidden="true"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- 4. Visits Tab (Placeholder) -->
+    <ion-tab-button
+      tab="visits"
+      [selected]="activeTab === 'visits'"
+      (click)="onVisitsClick()"
+      class="visits-tab-button"
+      aria-label="Visits Tab (Placeholder)"
+    >
+      <ion-icon [name]="activeTab === 'visits' ? 'location-sharp' : 'location-outline'" aria-hidden="true"></ion-icon>
+      <ion-label>Visits</ion-label>
+    </ion-tab-button>
+
+    <!-- 5. Settings Tab -->
+    <ion-tab-button
+      tab="settings"
+      [selected]="activeTab === 'settings'"
+      (click)="onTabClick('settings')"
+      aria-label="Settings Tab"
+    >
+      <ion-icon [name]="activeTab === 'settings' ? 'settings-sharp' : 'settings-outline'" aria-hidden="true"></ion-icon>
+      <ion-label>Settings</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

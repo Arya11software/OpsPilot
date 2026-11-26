@@ -1,0 +1,136 @@
+<ion-header class="ion-no-border settings-header">
+  <ion-toolbar class="settings-toolbar">
+    <div class="toolbar-inner-container">
+      <ion-buttons slot="start">
+        <ion-menu-button menu="main-menu" class="header-action-btn" autoHide="false" aria-label="Navigation Menu">
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+
+      <div class="header-title-container">
+        <span class="header-title">Settings</span>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="settings-content" [fullscreen]="true">
+  <div class="settings-screen-wrapper">
+    <!-- User Profile Card -->
+    <ion-card class="profile-card">
+      <ion-card-content class="profile-content">
+        <div class="profile-avatar">
+          <ion-icon name="person-circle-outline" aria-hidden="true"></ion-icon>
+        </div>
+        <div class="profile-details">
+          <h2 class="profile-name">{{ userName }}</h2>
+          <p class="profile-role">{{ userRole }}</p>
+          <span class="profile-id">ID: {{ specialistId }}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Preferences Section -->
+    <ion-card class="settings-section-card">
+      <ion-list lines="inset" class="settings-list">
+        <ion-list-header>
+          <ion-label>Preferences</ion-label>
+        </ion-list-header>
+
+        <!-- Notification Preference -->
+        <ion-item>
+          <ion-icon slot="start" name="notifications-outline" class="setting-icon"></ion-icon>
+          <ion-label>
+            <h3>Push Notifications</h3>
+            <p>Receive operational alerts and task assignments</p>
+          </ion-label>
+          <ion-toggle
+            slot="end"
+            [checked]="isNotificationsEnabled"
+            (ionChange)="onToggleNotifications($event)"
+            color="primary"
+            aria-label="Toggle push notifications"
+          ></ion-toggle>
+        </ion-item>
+
+        <!-- Theme Preference -->
+        <ion-item>
+          <ion-icon slot="start" name="moon-outline" class="setting-icon"></ion-icon>
+          <ion-label>
+            <h3>Dark Mode (Preview)</h3>
+            <p>Optimize screen contrast for low-light conditions</p>
+          </ion-label>
+          <ion-toggle
+            slot="end"
+            [checked]="isDarkMode"
+            (ionChange)="onToggleTheme($event)"
+            color="primary"
+            aria-label="Toggle dark mode"
+          ></ion-toggle>
+        </ion-item>
+
+        <!-- Auto-refresh Preference -->
+        <ion-item>
+          <ion-icon slot="start" name="refresh-outline" class="setting-icon"></ion-icon>
+          <ion-label>
+            <h3>Auto-Refresh Feed</h3>
+            <p>Periodically refresh field tasks in background</p>
+          </ion-label>
+          <ion-toggle
+            slot="end"
+            [checked]="isAutoRefreshEnabled"
+            (ionChange)="onToggleAutoRefresh($event)"
+            color="primary"
+            aria-label="Toggle auto-refresh"
+          ></ion-toggle>
+        </ion-item>
+
+        <!-- Distance Measurement -->
+        <ion-item>
+          <ion-icon slot="start" name="speedometer-outline" class="setting-icon"></ion-icon>
+          <ion-label>
+            <h3>Distance Unit</h3>
+            <p>Format for field travel distances</p>
+          </ion-label>
+          <ion-note slot="end" class="setting-note"> {{ distanceUnit }} </ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <!-- Application Information Section -->
+    <ion-card class="settings-section-card">
+      <ion-card-header>
+        <ion-card-title class="section-title"> Application Information </ion-card-title>
+      </ion-card-header>
+
+      <ion-list lines="inset" class="info-list">
+        <ion-item>
+          <ion-icon slot="start" name="information-circle-outline" class="info-icon"></ion-icon>
+          <ion-label>
+            <h3>Application</h3>
+            <p>OpsPilot Mobile</p>
+          </ion-label>
+          <ion-note slot="end">v{{ appVersion }}</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon slot="start" name="shield-checkmark-outline" class="info-icon"></ion-icon>
+          <ion-label>
+            <h3>Milestone</h3>
+            <p>Day 4 — Navigation & Lifecycle</p>
+          </ion-label>
+          <ion-note slot="end">Verified</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon slot="start" name="help-circle-outline" class="info-icon"></ion-icon>
+          <ion-label>
+            <h3>Training Track</h3>
+            <p>20-Day Ionic Angular Intern Plan</p>
+          </ion-label>
+          <ion-note slot="end">Active</ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
+</ion-content>

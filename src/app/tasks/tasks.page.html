@@ -1,0 +1,123 @@
+<ion-header class="ion-no-border tasks-header">
+  <ion-toolbar class="tasks-toolbar">
+    <div class="toolbar-inner-container">
+      <ion-buttons slot="start">
+        <ion-back-button
+          defaultHref="/home"
+          text=""
+          icon="arrow-back-outline"
+          class="header-back-btn"
+          aria-label="Back to Home"
+        ></ion-back-button>
+        <ion-menu-button menu="main-menu" class="header-action-btn" autoHide="false" aria-label="Navigation Menu">
+          <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+
+      <div class="header-title-container">
+        <span class="header-title">Field Tasks</span>
+      </div>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="onCreateTask()" class="header-action-btn" aria-label="Create Task">
+          <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </ion-toolbar>
+
+  <!-- Filter Segment -->
+  <ion-toolbar class="filter-toolbar">
+    <div class="toolbar-inner-container">
+      <ion-segment
+        [value]="selectedFilter"
+        (ionChange)="onFilterChange($event)"
+        mode="md"
+        class="task-filter-segment"
+        aria-label="Filter tasks by status"
+      >
+        <ion-segment-button value="all">
+          <ion-label>All ({{ allTasks.length }})</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="In Progress">
+          <ion-label>In Progress</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="Pending">
+          <ion-label>Pending</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="Completed">
+          <ion-label>Done</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="tasks-content" [fullscreen]="true">
+  <div class="tasks-screen-wrapper">
+    <!-- Loading State -->
+    @if (isLoading) {
+    <div class="loading-container" aria-live="polite">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p class="loading-text">Loading field tasks...</p>
+    </div>
+    }
+
+    <!-- Tasks List -->
+    @if (!isLoading && displayedTasks.length > 0) {
+    <ion-list class="task-items-list" lines="none" aria-label="Tasks list">
+      @for (task of displayedTasks; track task.id) {
+      <ion-item
+        class="task-card-item"
+        button
+        [detail]="false"
+        (click)="onTaskSelect(task.id)"
+        [attr.aria-label]="
+              task.title +
+              ', location: ' +
+              task.location +
+              ', status: ' +
+              task.status
+            "
+      >
+        <!-- Category Icon -->
+        <div slot="start" class="task-category-icon" aria-hidden="true">
+          <ion-icon [name]="task.icon"></ion-icon>
+        </div>
+
+        <!-- Task Details -->
+        <ion-label class="task-info">
+          <h3 class="task-title">{{ task.title }}</h3>
+          <p class="task-meta">
+            <ion-icon name="location-sharp" class="meta-location-icon" aria-hidden="true"></ion-icon>
+            <span>{{ task.location }} &bull; {{ task.distance }}</span>
+          </p>
+          @if (task.dueDate) {
+          <p class="task-due-date">Due: {{ task.dueDate }}</p>
+          }
+        </ion-label>
+
+        <!-- Status Pill -->
+        <ion-badge slot="end" [class]="'status-chip ' + getStatusClass(task.status)"> {{ task.status }} </ion-badge>
+      </ion-item>
+      }
+    </ion-list>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading && displayedTasks.length === 0) {
+    <ion-card class="empty-state-card">
+      <ion-card-content class="empty-state-content">
+        <div class="empty-icon-bubble">
+          <ion-icon name="clipboard-outline" aria-hidden="true"></ion-icon>
+        </div>
+        <h3 class="empty-title">No Tasks Found</h3>
+        <p class="empty-subtitle">There are no field tasks matching the selected filter.</p>
+        <ion-button fill="clear" color="primary" (click)="selectedFilter = 'all'; loadTasks()">
+          View All Tasks
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+    }
+  </div>
+</ion-content>
